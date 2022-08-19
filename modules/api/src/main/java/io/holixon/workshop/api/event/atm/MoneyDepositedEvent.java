@@ -1,11 +1,11 @@
-package io.holixon.workshop.api.event;
+package io.holixon.workshop.api.event.atm;
 
 import org.axonframework.serialization.Revision;
 
 @Revision("1")
-public record BankAccountCreatedEvent(
+public record MoneyDepositedEvent(
   String accountId,
-  int initialBalance
+  int amount
 ) {
   // empty
 }

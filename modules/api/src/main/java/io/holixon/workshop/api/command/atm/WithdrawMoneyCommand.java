@@ -1,8 +1,8 @@
-package io.holixon.workshop.api.command;
+package io.holixon.workshop.api.command.atm;
 
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
-public record DepositMoneyCommand(
+public record WithdrawMoneyCommand(
   @TargetAggregateIdentifier
   String accountId,
   int amount
