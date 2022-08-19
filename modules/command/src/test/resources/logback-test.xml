@@ -11,6 +11,9 @@
     <appender-ref ref="CONSOLE"/>
   </root>
 
+  <logger name="io.holixon.workshop" level="trace">
+    <appender-ref ref="CONSOLE"/>
+  </logger>
   <logger name="org.axonframework" level="info">
     <appender-ref ref="CONSOLE"/>
   </logger>
