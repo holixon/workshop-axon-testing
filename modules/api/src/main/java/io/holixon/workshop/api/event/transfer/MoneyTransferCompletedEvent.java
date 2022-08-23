@@ -4,7 +4,10 @@ import org.axonframework.serialization.Revision;
 
 @Revision("1")
 public record MoneyTransferCompletedEvent(
-  String moneyTransferId
+  String moneyTransferId,
+  String sourceAccountId,
+
+  int amount
 ) {
 
 }

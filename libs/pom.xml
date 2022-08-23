@@ -10,12 +10,10 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>workshop-axon-testing-modules</artifactId>
+  <artifactId>workshop-axon-testing-libs</artifactId>
   <packaging>pom</packaging>
 
   <modules>
-    <module>api</module>
-    <module>command</module>
-    <module>query</module>
+    <module>jackson</module>
   </modules>
 </project>

@@ -1,0 +1,16 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: holi-bank
+
+springdoc:
+  swagger-ui:
+    use-root-path: true
+
+axon:
+  serializer:
+    events: jackson
+    general: jackson
+    messages: jackson

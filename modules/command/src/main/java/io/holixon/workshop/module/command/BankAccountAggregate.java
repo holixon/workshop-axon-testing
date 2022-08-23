@@ -94,7 +94,12 @@ public class BankAccountAggregate {
     logger.trace("handle({})", cmd);
     assertActiveMoneyTransfer(cmd.moneyTransferId());
 
-    AggregateLifecycle.apply(new MoneyTransferCompletedEvent(cmd.moneyTransferId()));
+    AggregateLifecycle.apply(new MoneyTransferCompletedEvent(
+        cmd.moneyTransferId(),
+        cmd.sourceAccountId(),
+        activeMoneyTransfers.get(cmd.moneyTransferId())
+      )
+    );
   }
 
   @CommandHandler
@@ -103,7 +108,10 @@ public class BankAccountAggregate {
     assertAmountGtZero(cmd.amount());
     assertCanIncreaseBalance(cmd.amount());
 
-    AggregateLifecycle.apply(new MoneyTransferReceivedEvent(cmd.moneyTransferId(), cmd.amount()));
+    AggregateLifecycle.apply(new MoneyTransferReceivedEvent(
+      cmd.moneyTransferId(),
+      cmd.targetAccountId(),
+      cmd.amount()));
   }
 
   @CommandHandler
@@ -208,7 +216,6 @@ public class BankAccountAggregate {
   public Map<String, Integer> getActiveMoneyTransfers() {
     return activeMoneyTransfers;
   }
-
 
   @Override
   public String toString() {

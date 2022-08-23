@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 
 class BankAccountAggregateFixtureTest {
 
-  private static Logger logger = LoggerFactory.getLogger(BankAccountAggregateFixtureTest.class);
+  private static final Logger logger = LoggerFactory.getLogger(BankAccountAggregateFixtureTest.class);
 
   private final AggregateTestFixture<BankAccountAggregate> fixture = new AggregateTestFixture<>(BankAccountAggregate.class);
 
@@ -239,7 +239,7 @@ class BankAccountAggregateFixtureTest {
           new CompleteMoneyTransferCommand("1", "mt-1-2")
         )
         .expectEvents(
-          new MoneyTransferCompletedEvent("mt-1-2")
+          new MoneyTransferCompletedEvent("mt-1-2", "1", 60)
         )
         .expectState(new BankAccountAggregateState()
           .accountId("1")
@@ -258,7 +258,7 @@ class BankAccountAggregateFixtureTest {
           new ReceiveMoneyTransferCommand("2", "mt-1-2", 50)
         )
         .expectEvents(
-          new MoneyTransferReceivedEvent("mt-1-2", 50)
+          new MoneyTransferReceivedEvent("mt-1-2", "2", 50)
         )
         .expectState(new BankAccountAggregateState()
           .accountId("2")
