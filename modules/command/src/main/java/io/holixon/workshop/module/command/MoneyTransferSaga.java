@@ -3,9 +3,12 @@ package io.holixon.workshop.module.command;
 import io.holixon.workshop.api.command.transfer.CancelMoneyTransferCommand;
 import io.holixon.workshop.api.command.transfer.CompleteMoneyTransferCommand;
 import io.holixon.workshop.api.command.transfer.ReceiveMoneyTransferCommand;
+import io.holixon.workshop.api.event.transfer.MoneyTransferCompletedEvent;
 import io.holixon.workshop.api.event.transfer.MoneyTransferReceivedEvent;
 import io.holixon.workshop.api.event.transfer.MoneyTransferRequestedEvent;
+import io.holixon.workshop.api.event.transfer.MoneyTransferredEvent;
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.eventhandling.gateway.EventGateway;
 import org.axonframework.modelling.saga.EndSaga;
 import org.axonframework.modelling.saga.SagaEventHandler;
 import org.axonframework.modelling.saga.StartSaga;
@@ -15,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 @Saga
 public class MoneyTransferSaga {
+
   private static final Logger logger = LoggerFactory.getLogger(MoneyTransferSaga.class);
 
   private String moneyTransferId;
@@ -29,6 +33,8 @@ public class MoneyTransferSaga {
     this.sourceAccountId = evt.sourceAccountId();
     this.targetAccountId = evt.targetAccountId();
     this.amount = evt.amount();
+
+    logger.info("MoneyTransferSaga[{}] started with: {}", this.moneyTransferId, evt);
 
     var receiveCmd = new ReceiveMoneyTransferCommand(this.targetAccountId, this.moneyTransferId, this.amount);
 
@@ -46,10 +52,32 @@ public class MoneyTransferSaga {
   }
 
   @SagaEventHandler(associationProperty = "moneyTransferId")
-  @EndSaga
   public void on(MoneyTransferReceivedEvent evt, CommandGateway commandGateway) {
     var completeCmd = new CompleteMoneyTransferCommand(sourceAccountId, moneyTransferId);
     commandGateway.sendAndWait(completeCmd);
   }
 
+  @SagaEventHandler(associationProperty = "moneyTransferId")
+  @EndSaga
+  public void on(MoneyTransferCompletedEvent evt, EventGateway eventGateway) {
+    logger.info("on({})", evt);
+    var transferredEvent = new MoneyTransferredEvent(
+      moneyTransferId,
+      sourceAccountId,
+      targetAccountId,
+      amount
+    );
+    eventGateway.publish(transferredEvent);
+    logger.info("MoneyTransferSaga[{}] started with: {}", this.moneyTransferId, transferredEvent);
+  }
+
+  @Override
+  public String toString() {
+    return "MoneyTransferSaga{" +
+      "moneyTransferId='" + moneyTransferId + '\'' +
+      ", sourceAccountId='" + sourceAccountId + '\'' +
+      ", targetAccountId='" + targetAccountId + '\'' +
+      ", amount=" + amount +
+      '}';
+  }
 }

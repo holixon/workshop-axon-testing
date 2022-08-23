@@ -3,9 +3,7 @@ package io.holixon.workshop.module.query;
 import io.holixon.workshop.api.event.BankAccountCreatedEvent;
 import io.holixon.workshop.api.event.atm.MoneyDepositedEvent;
 import io.holixon.workshop.api.event.atm.MoneyWithdrawnEvent;
-import io.holixon.workshop.api.event.transfer.MoneyTransferCancelledEvent;
-import io.holixon.workshop.api.event.transfer.MoneyTransferCompletedEvent;
-import io.holixon.workshop.api.event.transfer.MoneyTransferReceivedEvent;
+import io.holixon.workshop.api.event.transfer.MoneyTransferredEvent;
 import io.holixon.workshop.api.query.CurrentBalanceQuery;
 import io.holixon.workshop.api.query.CurrentBalanceResponse;
 import java.util.Map;
@@ -39,12 +37,8 @@ public class CurrentBalanceProjection {
   }
 
   @EventHandler
-  public void on(MoneyTransferCompletedEvent evt) {
+  public void on(MoneyTransferredEvent evt) {
     modifyCurrentBalance(evt.sourceAccountId(), -evt.amount());
-  }
-
-  @EventHandler
-  public void on(MoneyTransferReceivedEvent evt) {
     modifyCurrentBalance(evt.targetAccountId(), +evt.amount());
   }
 

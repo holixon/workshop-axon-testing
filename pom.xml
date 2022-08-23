@@ -25,22 +25,23 @@
     <spring-boot.version>2.7.3</spring-boot.version>
 
     <jackson.version>2.12.3</jackson.version>
-    <junit5.version>5.9.0</junit5.version>
-    <jgiven.version>1.2.1</jgiven.version>
-    <assertj.version>3.19.0</assertj.version>
 
-    <!-- deactivate by default -->
-    <jacoco.skip>true</jacoco.skip>
-    <dokka.skip>true</dokka.skip>
-    <maven.javadoc.skip>true</maven.javadoc.skip>
-    <maven.sources.skip>true</maven.sources.skip>
-    <gpg.skip>false</gpg.skip>
+    <!-- VERSIONS: TEST -->
+    <junit5.version>5.9.0</junit5.version>
+    <jgiven.version>1.2.2</jgiven.version>
+    <assertj.version>3.23.1</assertj.version>
 
     <!-- MAVEN -->
     <skipTests>false</skipTests>
     <project.encoding>UTF-8</project.encoding>
     <project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
     <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
+    <!-- deactivate by default -->
+    <jacoco.skip>true</jacoco.skip>
+    <dokka.skip>true</dokka.skip>
+    <maven.javadoc.skip>true</maven.javadoc.skip>
+    <maven.sources.skip>true</maven.sources.skip>
+    <gpg.skip>false</gpg.skip>
   </properties>
 
   <dependencyManagement>
