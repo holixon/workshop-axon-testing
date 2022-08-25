@@ -15,6 +15,7 @@
   <modules>
     <module>libs</module>
     <module>modules</module>
+    <module>tests</module>
     <module>application</module>
   </modules>
 

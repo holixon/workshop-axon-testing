@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.holixon.workshop</groupId>
+    <artifactId>workshop-axon-testing-tests</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+  <groupId>io.holixon.workshop.test</groupId>
+  <artifactId>standalone</artifactId>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.holixon.workshop.module</groupId>
+      <artifactId>api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.holixon.workshop.module</groupId>
+      <artifactId>command</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.holixon.workshop.module</groupId>
+      <artifactId>query</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.holixon.workshop.lib</groupId>
+      <artifactId>lib-jackson</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.axonframework</groupId>
+      <artifactId>axon-configuration</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.axonframework</groupId>
+      <artifactId>axon-modelling</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>

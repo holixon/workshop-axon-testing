@@ -1,0 +1,11 @@
+axon:
+  serializer:
+    events: jackson
+    general: jackson
+    messages: jackson
+  axonserver:
+    enabled: false
+
+spring:
+  main:
+    banner-mode: "off"
