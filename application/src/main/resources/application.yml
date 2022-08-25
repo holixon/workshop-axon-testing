@@ -14,3 +14,4 @@ axon:
     events: jackson
     general: jackson
     messages: jackson
+

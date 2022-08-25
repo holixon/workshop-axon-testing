@@ -1,5 +1,6 @@
 package io.holixon.workshop.application;
 
+import io.holixon.workshop.application.query.QueryConfiguration;
 import io.holixon.workshop.lib.jackson.HoliBankObjectMapper;
 import io.holixon.workshop.module.command.BankAccountAggregate;
 import io.holixon.workshop.module.command.MoneyTransferIdGenerator;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 
 @SpringBootApplication(scanBasePackageClasses = {
   HoliBankApplication.class,
@@ -19,6 +21,9 @@ import org.springframework.context.annotation.Bean;
 @OpenAPIDefinition(
 
 )
+@Import({
+  QueryConfiguration.class
+})
 public class HoliBankApplication {
 
   public static void main(String[] args) {
@@ -36,14 +41,9 @@ public class HoliBankApplication {
     return MoneyTransferIdGenerator.RANDOM;
   }
 
-
   @Bean
   public Cache bankAccountCache() {
     return new WeakReferenceCache();
   }
 
-  @Bean
-  public CurrentBalanceProjection currentBalanceProjection() {
-    return new CurrentBalanceProjection();
-  }
 }
