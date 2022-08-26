@@ -13,7 +13,7 @@ import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @JGivenStage
-public class GivenWhenStage extends Stage<GivenWhenStage> {
+public class BankAccountActionStage extends Stage<BankAccountActionStage> {
 
   @Autowired
   private CommandGateway commandGateway;
@@ -22,7 +22,7 @@ public class GivenWhenStage extends Stage<GivenWhenStage> {
   private QueryGateway queryGateway;
 
   @As("a bankAccount with id=$ and initialBalance=$")
-  public GivenWhenStage create_bankAccount(String accountId, int initialBalance) {
+  public BankAccountActionStage create_bankAccount(String accountId, int initialBalance) {
 
     commandGateway.sendAndWait(new CreateBankAccountCommand(accountId, initialBalance));
 
@@ -30,19 +30,19 @@ public class GivenWhenStage extends Stage<GivenWhenStage> {
   }
 
   @As("an amount of $ is withdrawn")
-  public GivenWhenStage withdraw(@Hidden String accountId, int amount) {
+  public BankAccountActionStage withdraw(@Hidden String accountId, int amount) {
     commandGateway.sendAndWait(new WithdrawMoneyCommand(accountId, amount));
     return self();
   }
 
   @As("an amount of $ is deposited")
-  public GivenWhenStage deposit(@Hidden String accountId, int amount) {
+  public BankAccountActionStage deposit(@Hidden String accountId, int amount) {
     commandGateway.sendAndWait(new DepositMoneyCommand(accountId, amount));
     return self();
   }
 
   @As("an amount of $amount is transferred from source=$sourceAccountId to target=$targetAccountId")
-  public GivenWhenStage transfer(String sourceAccountId, String targetAccountId, int amount) {
+  public BankAccountActionStage transfer(String sourceAccountId, String targetAccountId, int amount) {
     commandGateway.sendAndWait(new RequestMoneyTransferCommand(sourceAccountId, targetAccountId, amount));
     return self();
   }

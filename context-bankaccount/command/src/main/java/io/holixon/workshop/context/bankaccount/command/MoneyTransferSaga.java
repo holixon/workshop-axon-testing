@@ -54,6 +54,8 @@ public class MoneyTransferSaga {
   @SagaEventHandler(associationProperty = "moneyTransferId")
   public void on(MoneyTransferReceivedEvent evt, CommandGateway commandGateway) {
     var completeCmd = new CompleteMoneyTransferCommand(sourceAccountId, moneyTransferId);
+
+    // applied simplification: completion can/will not fail. Otherwise we would have to implement compensation on the target account (2-phase commit).
     commandGateway.sendAndWait(completeCmd);
   }
 
@@ -61,6 +63,8 @@ public class MoneyTransferSaga {
   @EndSaga
   public void on(MoneyTransferCompletedEvent evt, EventGateway eventGateway) {
     logger.info("on({})", evt);
+
+    // Milestone event
     var transferredEvent = new MoneyTransferredEvent(
       moneyTransferId,
       sourceAccountId,

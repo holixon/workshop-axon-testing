@@ -54,6 +54,9 @@ public class BankAccountAggregate {
   @CommandHandler
   public BankAccountAggregate(CreateBankAccountCommand cmd) {
     logger.trace("handle({})", cmd);
+    if (cmd.initialBalance() > MAX_BALANCE) {
+      throw new MaximumBalanceExceededException(cmd.accountId(), 0, cmd.initialBalance());
+    }
 
     AggregateLifecycle.apply(new BankAccountCreatedEvent(cmd.accountId(), cmd.initialBalance()));
   }

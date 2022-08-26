@@ -14,7 +14,7 @@ import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @JGivenStage
-public class ThenStage extends Stage<ThenStage> {
+public class BankAccountAssertStage extends Stage<BankAccountAssertStage> {
   @Autowired
   private CommandGateway commandGateway;
 
@@ -22,7 +22,7 @@ public class ThenStage extends Stage<ThenStage> {
   private QueryGateway queryGateway;
 
   @As("account $ has balance=$")
-  public ThenStage account_has_balance(@Quoted String accountId, int balance) {
+  public BankAccountAssertStage account_has_balance(@Quoted String accountId, int balance) {
 
     await().untilAsserted(() -> {
 
