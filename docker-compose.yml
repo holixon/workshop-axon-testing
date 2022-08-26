@@ -1,3 +1,5 @@
+version: "3"
+
 services:
   axon-server:
     container_name: "workshop-axon-server"

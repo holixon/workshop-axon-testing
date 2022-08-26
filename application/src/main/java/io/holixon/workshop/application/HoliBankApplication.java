@@ -1,6 +1,6 @@
 package io.holixon.workshop.application;
 
-import io.holixon.workshop.application.query.QueryConfiguration;
+import io.holixon.workshop.application.rest.query.QueryConfiguration;
 import io.holixon.workshop.infrastructure.jackson.HoliBankObjectMapper;
 import io.holixon.workshop.context.bankaccount.command.BankAccountAggregate;
 import io.holixon.workshop.context.bankaccount.command.MoneyTransferIdGenerator;

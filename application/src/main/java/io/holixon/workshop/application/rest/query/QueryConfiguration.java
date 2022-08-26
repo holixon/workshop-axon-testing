@@ -1,4 +1,4 @@
-package io.holixon.workshop.application.query;
+package io.holixon.workshop.application.rest.query;
 
 import io.holixon.workshop.context.bankaccount.query.CurrentBalanceProjection;
 import io.holixon.workshop.context.bankaccount.query.MoneyTransferProjection;
