@@ -16,8 +16,8 @@
     <!-- shared code for common infrastructure -->
     <module>infrastructure</module>
 
-    <module>modules</module>
-    <module>tests</module>
+    <module>context-bankaccount</module>
+
     <module>application</module>
   </modules>
 
@@ -76,18 +76,19 @@
       </dependency>
 
       <dependency>
-        <groupId>io.holixon.workshop.module</groupId>
+        <groupId>io.holixon.workshop.context.bankaccount</groupId>
         <artifactId>api</artifactId>
         <version>${project.version}</version>
       </dependency>
 
       <dependency>
-        <groupId>io.holixon.workshop.module</groupId>
+        <groupId>io.holixon.workshop.context.bankaccount</groupId>
         <artifactId>command</artifactId>
         <version>${project.version}</version>
       </dependency>
+
       <dependency>
-        <groupId>io.holixon.workshop.module</groupId>
+        <groupId>io.holixon.workshop.context.bankaccount</groupId>
         <artifactId>query</artifactId>
         <version>${project.version}</version>
       </dependency>

@@ -14,15 +14,15 @@
 
   <dependencies>
     <dependency>
-      <groupId>io.holixon.workshop.module</groupId>
+      <groupId>io.holixon.workshop.context.bankaccount</groupId>
       <artifactId>api</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.holixon.workshop.module</groupId>
+      <groupId>io.holixon.workshop.context.bankaccount</groupId>
       <artifactId>command</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.holixon.workshop.module</groupId>
+      <groupId>io.holixon.workshop.context.bankaccount</groupId>
       <artifactId>query</artifactId>
     </dependency>
 

@@ -5,17 +5,17 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.holixon.workshop</groupId>
-    <artifactId>workshop-axon-testing</artifactId>
+    <groupId>io.holixon.workshop.context.bankaccount</groupId>
+    <artifactId>context-bankaccount</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>workshop-axon-testing-modules</artifactId>
+  <groupId>io.holixon.workshop.context.bankaccount.test</groupId>
+  <artifactId>integration-tests</artifactId>
   <packaging>pom</packaging>
 
   <modules>
-    <module>api</module>
-    <module>command</module>
-    <module>query</module>
+    <module>standalone</module>
+    <module>spring-boot</module>
   </modules>
 </project>

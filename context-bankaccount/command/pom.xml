@@ -5,17 +5,16 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.holixon.workshop</groupId>
-    <artifactId>workshop-axon-testing-modules</artifactId>
+    <groupId>io.holixon.workshop.context.bankaccount</groupId>
+    <artifactId>context-bankaccount</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <groupId>io.holixon.workshop.module</groupId>
   <artifactId>command</artifactId>
 
   <dependencies>
     <dependency>
-      <groupId>${project.groupId}</groupId>
+      <groupId>io.holixon.workshop.context.bankaccount</groupId>
       <artifactId>api</artifactId>
     </dependency>
 

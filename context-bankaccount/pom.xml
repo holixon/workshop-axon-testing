@@ -10,11 +10,14 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>workshop-axon-testing-tests</artifactId>
+  <groupId>io.holixon.workshop.context.bankaccount</groupId>
+  <artifactId>context-bankaccount</artifactId>
   <packaging>pom</packaging>
 
   <modules>
-    <module>standalone</module>
-    <module>spring-boot</module>
+    <module>api</module>
+    <module>command</module>
+    <module>query</module>
+    <module>_integration-tests</module>
   </modules>
 </project>
