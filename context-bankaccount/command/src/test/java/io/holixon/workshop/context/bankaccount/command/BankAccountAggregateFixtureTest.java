@@ -108,6 +108,16 @@ class BankAccountAggregateFixtureTest {
     }
 
     @Test
+    void create_bank_account_fails_with_initial_balance_gt_max() {
+      fixture
+        .givenNoPriorActivity()
+        .when(
+          new CreateBankAccountCommand("1", 1001)
+        )
+        .expectException(MaximumBalanceExceededException.class);
+    }
+
+    @Test
     void deposit_money_adds_to_currentBalance() {
       fixture
         .given(
