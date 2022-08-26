@@ -1,10 +1,9 @@
 package io.holixon.workshop.application;
 
 import io.holixon.workshop.application.query.QueryConfiguration;
-import io.holixon.workshop.lib.jackson.HoliBankObjectMapper;
-import io.holixon.workshop.module.command.BankAccountAggregate;
-import io.holixon.workshop.module.command.MoneyTransferIdGenerator;
-import io.holixon.workshop.module.query.CurrentBalanceProjection;
+import io.holixon.workshop.infrastructure.jackson.HoliBankObjectMapper;
+import io.holixon.workshop.context.bankaccount.command.BankAccountAggregate;
+import io.holixon.workshop.context.bankaccount.command.MoneyTransferIdGenerator;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.axonframework.common.caching.Cache;
 import org.axonframework.common.caching.WeakReferenceCache;

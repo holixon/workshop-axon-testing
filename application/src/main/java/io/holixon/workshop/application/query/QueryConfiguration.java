@@ -1,7 +1,7 @@
 package io.holixon.workshop.application.query;
 
-import io.holixon.workshop.module.query.CurrentBalanceProjection;
-import io.holixon.workshop.module.query.MoneyTransferProjection;
+import io.holixon.workshop.context.bankaccount.query.CurrentBalanceProjection;
+import io.holixon.workshop.context.bankaccount.query.MoneyTransferProjection;
 import org.springframework.context.annotation.Bean;
 
 public class QueryConfiguration {

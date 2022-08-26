@@ -1,11 +1,9 @@
 package io.holixon.workshop.application.query;
 
-import io.holixon.workshop.api.query.CurrentBalanceQuery;
-import io.holixon.workshop.api.query.CurrentBalanceResponse;
-import io.holixon.workshop.api.query.MoneyTransfer;
-import io.holixon.workshop.api.query.MoneyTransfersQuery;
-import io.holixon.workshop.api.query.MoneyTransfersResponse;
-import java.util.List;
+import io.holixon.workshop.context.bankaccount.api.query.CurrentBalanceQuery;
+import io.holixon.workshop.context.bankaccount.api.query.CurrentBalanceResponse;
+import io.holixon.workshop.context.bankaccount.api.query.MoneyTransfersQuery;
+import io.holixon.workshop.context.bankaccount.api.query.MoneyTransfersResponse;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

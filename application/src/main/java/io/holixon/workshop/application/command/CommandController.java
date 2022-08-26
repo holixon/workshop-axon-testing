@@ -1,9 +1,9 @@
 package io.holixon.workshop.application.command;
 
-import io.holixon.workshop.api.command.CreateBankAccountCommand;
-import io.holixon.workshop.api.command.atm.DepositMoneyCommand;
-import io.holixon.workshop.api.command.atm.WithdrawMoneyCommand;
-import io.holixon.workshop.api.command.transfer.RequestMoneyTransferCommand;
+import io.holixon.workshop.context.bankaccount.api.command.CreateBankAccountCommand;
+import io.holixon.workshop.context.bankaccount.api.command.atm.DepositMoneyCommand;
+import io.holixon.workshop.context.bankaccount.api.command.atm.WithdrawMoneyCommand;
+import io.holixon.workshop.context.bankaccount.api.command.transfer.RequestMoneyTransferCommand;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
