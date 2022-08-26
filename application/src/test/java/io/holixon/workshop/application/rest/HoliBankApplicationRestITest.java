@@ -26,7 +26,7 @@ public class HoliBankApplicationRestITest extends AbstractTestContainerIntegrati
   }
 
   @Test
-  void should_create_account() throws Exception {
+  void bank_account_can_be_created() throws Exception {
 
     given()
       .noPriorActivity();
@@ -39,7 +39,7 @@ public class HoliBankApplicationRestITest extends AbstractTestContainerIntegrati
   }
 
   @Test
-  void should_withdraw_money() throws Exception {
+  void money_can_be_withdrawn() throws Exception {
     given()
       .account_is_created(sourceAccountId, 100);
 
@@ -51,7 +51,7 @@ public class HoliBankApplicationRestITest extends AbstractTestContainerIntegrati
   }
 
   @Test
-  void should_deposit_money() throws Exception {
+  void money_can_be_deposited() throws Exception {
     given()
       .account_is_created(sourceAccountId, 100);
 
@@ -63,7 +63,7 @@ public class HoliBankApplicationRestITest extends AbstractTestContainerIntegrati
   }
 
   @Test
-  void should_transfer_money() throws Exception {
+  void money_can_be_transferred() throws Exception {
     given()
       .account_is_created(sourceAccountId, 100)
       .and()

@@ -80,6 +80,7 @@
         </executions>
         <configuration>
           <format>html</format>
+          <sourceDirectory>${project.build.directory}/jgiven-reports</sourceDirectory>
         </configuration>
       </plugin>
     </plugins>
