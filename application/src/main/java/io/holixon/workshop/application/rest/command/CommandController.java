@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import static org.springframework.http.ResponseEntity.created;
+import static org.springframework.http.ResponseEntity.noContent;
 
 @RestController
 @RequestMapping("/rest/command")
@@ -38,17 +39,20 @@ public class CommandController {
   }
 
   @PutMapping("/withdraw-money")
-  public void withdrawMoney(@RequestBody WithdrawMoneyCommand cmd) {
+  public ResponseEntity<Void> withdrawMoney(@RequestBody WithdrawMoneyCommand cmd) {
     commandGateway.sendAndWait(cmd);
+    return noContent().build();
   }
 
   @PutMapping("/deposit-money")
-  public void depositMoney(@RequestBody DepositMoneyCommand cmd) {
+  public ResponseEntity<Void> depositMoney(@RequestBody DepositMoneyCommand cmd) {
     commandGateway.sendAndWait(cmd);
+    return noContent().build();
   }
 
   @PutMapping("/request-money-transfer")
-  public void transferMoney(@RequestBody RequestMoneyTransferCommand cmd) {
+  public ResponseEntity<Void> transferMoney(@RequestBody RequestMoneyTransferCommand cmd) {
     commandGateway.sendAndWait(cmd);
+    return noContent().build();
   }
 }

@@ -47,6 +47,7 @@
       <version>1.6.11</version>
     </dependency>
 
+    <!-- TESTING -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
@@ -63,15 +64,21 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>io.holixon.axon.testing</groupId>
-      <artifactId>axon-server-testcontainer</artifactId>
-      <version>0.0.2</version>
+      <groupId>com.tngtech.jgiven</groupId>
+      <artifactId>jgiven-spring-junit5</artifactId>
+      <version>${jgiven.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
       <scope>test</scope>
     </dependency>
 
     <dependency>
-      <groupId>org.awaitility</groupId>
-      <artifactId>awaitility</artifactId>
+      <groupId>io.holixon.axon.testing</groupId>
+      <artifactId>axon-server-testcontainer</artifactId>
+      <version>0.1.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>

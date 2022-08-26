@@ -1,82 +1,81 @@
 package io.holixon.workshop.application.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.holixon.axon.testcontainer.AxonServerContainer;
-import io.holixon.axon.testcontainer.spring.AxonServerContainerSpring;
+import com.tngtech.jgiven.integration.spring.EnableJGiven;
 import io.holixon.workshop.application.HoliBankApplication;
-import io.holixon.workshop.context.bankaccount.api.command.CreateBankAccountCommand;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import java.util.UUID;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {
   HoliBankApplication.class
 })
-@Testcontainers
-@EnableAutoConfiguration
 @AutoConfigureMockMvc
-public class HoliBankApplicationRestITest {
-  @Container
-  public static final AxonServerContainer AXON = AxonServerContainer
-    .builder()
-    .dockerImageVersion("4.6.2-dev")
-    .enableDevMode()
-    .build();
+@EnableJGiven
+public class HoliBankApplicationRestITest extends AbstractTestContainerIntegrationTestBase<HoliBankApplicationActionStage, HoliBankApplicationAssertStage> {
 
-  @DynamicPropertySource
-  public static void axonProperties(final DynamicPropertyRegistry registry) {
-    AxonServerContainerSpring.addDynamicProperties(AXON, registry);
-  }
+  private String sourceAccountId;
+  private String targetAccountId;
 
-  @Autowired
-  private ObjectMapper objectMapper;
-
-  @Autowired
-  private MockMvc rest;
-
-  @AfterAll
-  static void afterAll() {
-    AXON.stop();
+  @BeforeEach
+  public void initializeAccountId() {
+    sourceAccountId = UUID.randomUUID().toString();
+    targetAccountId = UUID.randomUUID().toString();
   }
 
   @Test
   void should_create_account() throws Exception {
-    rest
-      .perform(
-        post("/rest/command/create-bank-account")
-          .contentType(MediaType.APPLICATION_JSON)
-          .content(objectMapper.writeValueAsString(
-            new CreateBankAccountCommand("2", 100)
-          ))
-      ).andExpect(
-        status().isCreated()
-      ).andExpect(
-        header()
-          .string("Location", "http://localhost/rest/query/current-balance/2")
-      );
+
+    given()
+      .noPriorActivity();
+
+    when()
+      .account_is_created(sourceAccountId, 100);
+
+    then()
+      .account_with_id_has_balance(sourceAccountId, 100);
   }
 
   @Test
   void should_withdraw_money() throws Exception {
+    given()
+      .account_is_created(sourceAccountId, 100);
 
+    when()
+      .money_is_withdrawn(sourceAccountId, 20);
+
+    then()
+      .account_with_id_has_balance(sourceAccountId, 80);
   }
 
   @Test
   void should_deposit_money() throws Exception {
+    given()
+      .account_is_created(sourceAccountId, 100);
 
+    when()
+      .money_is_deposited(sourceAccountId, 20);
+
+    then()
+      .account_with_id_has_balance(sourceAccountId, 120);
+  }
+
+  @Test
+  void should_transfer_money() throws Exception {
+    given()
+      .account_is_created(sourceAccountId, 100)
+      .and()
+      .account_is_created(targetAccountId, 100);
+
+    when()
+      .money_is_transferred(sourceAccountId, targetAccountId, 20);
+
+    then()
+      .account_with_id_has_balance(sourceAccountId, 80)
+      .and()
+      .account_with_id_has_balance(targetAccountId, 120);
   }
 
 }
