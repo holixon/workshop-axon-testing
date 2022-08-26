@@ -49,5 +49,10 @@
       <artifactId>hamcrest-core</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>io.holixon.workshop.lib</groupId>
+      <artifactId>lib-jackson</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>
