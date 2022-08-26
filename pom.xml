@@ -13,7 +13,9 @@
   <url>https://github.com/holixon/workshop-axon-testing/</url>
 
   <modules>
-    <module>libs</module>
+    <!-- shared code for common infrastructure -->
+    <module>infrastructure</module>
+
     <module>modules</module>
     <module>tests</module>
     <module>application</module>
@@ -91,8 +93,8 @@
       </dependency>
 
       <dependency>
-        <groupId>io.holixon.workshop.lib</groupId>
-        <artifactId>lib-jackson</artifactId>
+        <groupId>io.holixon.workshop.infrastructure</groupId>
+        <artifactId>serialization-jackson</artifactId>
         <version>${project.version}</version>
       </dependency>
     </dependencies>

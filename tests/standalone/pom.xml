@@ -27,8 +27,8 @@
       <artifactId>query</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.holixon.workshop.lib</groupId>
-      <artifactId>lib-jackson</artifactId>
+      <groupId>io.holixon.workshop.infrastructure</groupId>
+      <artifactId>serialization-jackson</artifactId>
     </dependency>
 
     <dependency>

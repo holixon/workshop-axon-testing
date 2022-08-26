@@ -6,12 +6,12 @@
 
   <parent>
     <groupId>io.holixon.workshop</groupId>
-    <artifactId>workshop-axon-testing-libs</artifactId>
+    <artifactId>workshop-axon-testing-infrastructure</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <groupId>io.holixon.workshop.lib</groupId>
-  <artifactId>lib-jackson</artifactId>
+  <groupId>io.holixon.workshop.infrastructure</groupId>
+  <artifactId>serialization-jackson</artifactId>
 
   <dependencies>
     <dependency>
