@@ -14,10 +14,10 @@ import io.holixon.workshop.context.bankaccount.api.event.transfer.MoneyTransferC
 import io.holixon.workshop.context.bankaccount.api.event.transfer.MoneyTransferCompletedEvent;
 import io.holixon.workshop.context.bankaccount.api.event.transfer.MoneyTransferReceivedEvent;
 import io.holixon.workshop.context.bankaccount.api.event.transfer.MoneyTransferRequestedEvent;
-import io.holixon.workshop.context.bankaccount.command.exception.MaximumBalanceExceededException;
 import io.holixon.workshop.context.bankaccount.command.exception.InsufficientBalanceException;
-import java.util.HashMap;
-import java.util.Map;
+import io.holixon.workshop.context.bankaccount.command.exception.MaximumBalanceExceededException;
+import io.holixon.workshop.context.bankaccount.command.model.BalanceModel;
+import io.holixon.workshop.context.bankaccount.command.model.MoneyTransferModel;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -25,6 +25,9 @@ import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Aggregate(cache = "bankAccountCache")
 public class BankAccountAggregate {
@@ -43,9 +46,8 @@ public class BankAccountAggregate {
   @AggregateIdentifier
   private String accountId;
 
-  private int currentBalance;
-
-  private final Map<String, Integer> activeMoneyTransfers = new HashMap<>();
+  private BalanceModel balance;
+  private MoneyTransferModel moneyTransfers = new MoneyTransferModel(new HashMap<>());
 
   public BankAccountAggregate() {
     // empty default constructor used for event sourcing
@@ -65,7 +67,10 @@ public class BankAccountAggregate {
   public void handle(DepositMoneyCommand cmd) {
     logger.trace("on({})", cmd);
     assertAmountGtZero(cmd.amount());
-    assertCanIncreaseBalance(cmd.amount());
+
+    if (!balance.canIncreaseBalance(cmd.amount())) {
+      throw new MaximumBalanceExceededException(accountId, balance.value(), cmd.amount());
+    }
 
     AggregateLifecycle.apply(new MoneyDepositedEvent(cmd.accountId(), cmd.amount()));
   }
@@ -74,8 +79,9 @@ public class BankAccountAggregate {
   public void handle(WithdrawMoneyCommand cmd) {
     logger.trace("handle({})", cmd);
     assertAmountGtZero(cmd.amount());
-    assertCanDecreaseBalance(cmd.amount());
-
+    if (!balance.canDecreaseBalance(cmd.amount(), moneyTransfers.getReservedAmount())) {
+      throw new InsufficientBalanceException(accountId, balance.value(), cmd.amount());
+    }
     AggregateLifecycle.apply(new MoneyWithdrawnEvent(cmd.accountId(), cmd.amount()));
   }
 
@@ -95,13 +101,16 @@ public class BankAccountAggregate {
   @CommandHandler
   public void handle(CompleteMoneyTransferCommand cmd) {
     logger.trace("handle({})", cmd);
-    assertActiveMoneyTransfer(cmd.moneyTransferId());
+    if (!moneyTransfers.hasMoneyTransfer(cmd.moneyTransferId())) {
+      throw new IllegalStateException(String.format("BankAccount[id=%s] is not part of transfer=%s", accountId, cmd.moneyTransferId()));
+    }
+
 
     AggregateLifecycle.apply(new MoneyTransferCompletedEvent(
-        cmd.moneyTransferId(),
-        cmd.sourceAccountId(),
-        activeMoneyTransfers.get(cmd.moneyTransferId())
-      )
+                               cmd.moneyTransferId(),
+                               cmd.sourceAccountId(),
+                               moneyTransfers.getAmountForTransfer(cmd.moneyTransferId())
+                             )
     );
   }
 
@@ -109,7 +118,10 @@ public class BankAccountAggregate {
   public void handle(ReceiveMoneyTransferCommand cmd) {
     logger.trace("handle({})", cmd);
     assertAmountGtZero(cmd.amount());
-    assertCanIncreaseBalance(cmd.amount());
+
+    if (!balance.canIncreaseBalance(cmd.amount())) {
+      throw new MaximumBalanceExceededException(accountId, balance.value(), cmd.amount());
+    }
 
     AggregateLifecycle.apply(new MoneyTransferReceivedEvent(
       cmd.moneyTransferId(),
@@ -120,7 +132,10 @@ public class BankAccountAggregate {
   @CommandHandler
   public void handle(CancelMoneyTransferCommand cmd) {
     logger.trace("handle({})", cmd);
-    assertActiveMoneyTransfer(cmd.moneyTransferId());
+
+    if (!moneyTransfers.hasMoneyTransfer(cmd.moneyTransferId())) {
+      throw new IllegalStateException(String.format("BankAccount[id=%s] is not part of transfer=%s", accountId, cmd.moneyTransferId()));
+    }
 
     AggregateLifecycle.apply(new MoneyTransferCancelledEvent(cmd.moneyTransferId(), cmd.reason()));
   }
@@ -132,48 +147,47 @@ public class BankAccountAggregate {
     // TODO this eventHandler could be left out so people see the "Aggregate identifier must be non-null after applying an event. Make sure the aggregate identifier is initialized at the latest when handling the creation event." exception in test.
     logger.trace("on({})", evt);
     this.accountId = evt.accountId();
-    this.currentBalance = evt.initialBalance();
+    this.balance = new BalanceModel(evt.initialBalance(), MIN_BALANCE, MAX_BALANCE);
   }
 
   @EventSourcingHandler
   public void on(MoneyDepositedEvent evt) {
     logger.trace("on({})", evt);
-    this.currentBalance += evt.amount();
+    this.balance = this.balance.increase(evt.amount());
   }
 
   @EventSourcingHandler
   public void on(MoneyWithdrawnEvent evt) {
     logger.trace("on({})", evt);
-    this.currentBalance -= evt.amount();
+    this.balance = this.balance.decrease(evt.amount());
   }
 
   @EventSourcingHandler
   public void on(MoneyTransferRequestedEvent evt) {
     logger.trace("on({})", evt);
-
-    activeMoneyTransfers.put(evt.moneyTransferId(), evt.amount());
+    moneyTransfers = moneyTransfers.add(evt.moneyTransferId(), evt.amount());
   }
 
   @EventSourcingHandler
   public void on(MoneyTransferCompletedEvent evt) {
     logger.trace("on({})", evt);
 
-    currentBalance -= activeMoneyTransfers.get(evt.moneyTransferId());
-    activeMoneyTransfers.remove(evt.moneyTransferId());
+    this.balance = this.balance.decrease(moneyTransfers.getAmountForTransfer(evt.moneyTransferId()));
+
+    moneyTransfers = moneyTransfers.remove(evt.moneyTransferId());
   }
 
   @EventSourcingHandler
   public void on(MoneyTransferReceivedEvent evt) {
     logger.trace("on({})", evt);
-
-    currentBalance += evt.amount();
+    this.balance = this.balance.increase(evt.amount());
   }
 
   @EventSourcingHandler
   public void on(MoneyTransferCancelledEvent evt) {
     logger.trace("on({})", evt);
 
-    activeMoneyTransfers.remove(evt.moneyTransferId());
+    moneyTransfers = moneyTransfers.remove(evt.moneyTransferId());
   }
 
   // ----------------------------------------------------------
@@ -184,48 +198,26 @@ public class BankAccountAggregate {
     }
   }
 
-  void assertCanIncreaseBalance(int amount) throws MaximumBalanceExceededException {
-    if (currentBalance + amount > MAX_BALANCE) {
-      throw new MaximumBalanceExceededException(accountId, currentBalance, amount);
-    }
-  }
-
-  void assertCanDecreaseBalance(int amount) throws InsufficientBalanceException {
-    if (getEffectiveBalance() - amount < MIN_BALANCE) {
-      throw new InsufficientBalanceException(accountId, currentBalance, amount);
-    }
-  }
-
-  void assertActiveMoneyTransfer(String moneyTransferId) {
-    if (!activeMoneyTransfers.containsKey(moneyTransferId)) {
-      throw new IllegalStateException(String.format("BankAccount[id=%s] is not part of transfer=%s", accountId, moneyTransferId));
-    }
-  }
-
   // ----------------------------------------------------------
-
-  public int getEffectiveBalance() {
-    return currentBalance - activeMoneyTransfers.values().stream().mapToInt(Integer::intValue).sum();
-  }
 
   public String getAccountId() {
     return accountId;
   }
 
   public int getCurrentBalance() {
-    return currentBalance;
+    return balance.value();
   }
 
   public Map<String, Integer> getActiveMoneyTransfers() {
-    return activeMoneyTransfers;
+    return moneyTransfers.getActiveMoneyTransfers();
   }
 
   @Override
   public String toString() {
     return "BankAccountAggregate{" +
       "accountId='" + accountId + '\'' +
-      ", currentBalance=" + currentBalance +
-      ", currentTransfers=" + activeMoneyTransfers +
+      ", currentBalance=" + balance.value() +
+      ", currentTransfers=" + moneyTransfers.activeMoneyTransfers() +
       '}';
   }
 }
