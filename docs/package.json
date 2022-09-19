@@ -27,7 +27,7 @@
     "terser-webpack-plugin": "^5.3.3",
     "url-loader": "^4.1.1",
     "webpack": "^5.73.0",
-    "webpack-bundle-analyzer": "^3.9.0",
+    "webpack-bundle-analyzer": "^4.6.1",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.9.3",
     "zip-webpack-plugin": "^4.0.1"
