@@ -1,36 +1,18 @@
 import Reveal from 'reveal.js';
 // STYLING
-import 'reveal.js/css/reveal.css';
-import 'reveal.js/lib/css/zenburn.css';
+import 'reveal.js/dist/reveal.css';
+import 'reveal.js/plugin/highlight/zenburn.css';
 import './styles/theme.scss';
 
-// library used by RevealJS to download dependency plugins (here: markdown and highlighting)
-require('headjs/dist/1.0.0/head.min.js');
+// PLUGINS
+import RevealMarkdown from 'reveal.js/plugin/markdown/markdown.js'
+import RevealNotes from 'reveal.js/plugin/notes/notes.js'
+import RevealZoom from 'reveal.js/plugin/zoom/zoom.js'
+import RevealSearch from 'reveal.js/plugin/search/search.js'
+import RevealHighlight from 'reveal.js/plugin/highlight/highlight.js'
+
 // required by the RevealJS markdown plugins
 window.Reveal = Reveal;
-
-// If the query includes 'print-pdf', include the PDF print sheet
-if (window.location.search.match(/print-pdf/gi)) {
-  var link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.type = 'text/css';
-  link.href = 'node_modules/reveal.js/css/print/pdf.css';
-  document.getElementsByTagName('head')[0].appendChild(link);
-  var linkMore = document.createElement('link');
-  linkMore.rel = 'stylesheet';
-  linkMore.type = 'text/css';
-  linkMore.href = 'styles/pdf.css';
-  document.getElementsByTagName('head')[0].appendChild(linkMore);
-}
-
-// PLUGINS
-// includes the plugins in the build, at the url expected by RevealJS
-require('file-loader?name=plugin/markdown/[name].[ext]!reveal.js/plugin/markdown/marked.js');
-require('file-loader?name=plugin/markdown/[name].[ext]!reveal.js/plugin/markdown/markdown.js');
-require('file-loader?name=plugin/notes/[name].[ext]!reveal.js/plugin/notes/notes.js');
-require('file-loader?name=plugin/notes/[name].[ext]!reveal.js/plugin/notes/notes.html');
-require('file-loader?name=plugin/zoom-js/[name].[ext]!reveal.js/plugin/zoom-js/zoom.js');
-require('file-loader?name=plugin/highlight/[name].[ext]!reveal.js/plugin/highlight/highlight.js');
 
 // loads the markdown content and starts the slideshow
 window.document.getElementById('source').innerHTML = require('./slides.md');
@@ -95,7 +77,7 @@ Reveal.initialize({
   minScale: 0.5,
   maxScale: 400.0,
 
-  theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+  theme: Reveal.theme, // available themes are in /css/theme
 
   // Transition speed
   transitionSpeed: 'default', // default/fast/slow
@@ -104,13 +86,11 @@ Reveal.initialize({
 
   hideAddressBar: true,
 
-  dependencies: [
-    // interpret Markdown in <section> elements
-    { src: 'plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
-    { src: 'plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
-    // syntax highlight for <code> elements
-    { src: 'plugin/highlight/highlight.js', callback: function () { hljs.initHighlightingOnLoad(); } },
-    { src: 'plugin/zoom-js/zoom.js', callback: function () { return !!document.body.classList; } },
-    { src: 'plugin/notes/notes.js', callback: function () { return !!document.body.classList; } },
-  ],
+  plugins: [
+    RevealMarkdown,
+    RevealNotes,
+    RevealZoom,
+    RevealHighlight,
+    RevealSearch
+  ]
 });
