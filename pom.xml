@@ -196,6 +196,14 @@
     </plugins>
   </build>
 
+  <profiles>
+    <profile>
+      <id>docs</id>
+      <modules>
+        <module>docs</module>
+      </modules>
+    </profile>
+  </profiles>
 
   <!-- deploy and release configuration -->
   <distributionManagement>
