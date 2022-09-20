@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.holixon.workshop</groupId>
+    <artifactId>workshop-axon-testing</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>workshop-axon-testing-docs</artifactId>
+  <packaging>jar</packaging>
+
+  <properties>
+    <npm.version>8.1.2</npm.version>
+    <node.version>v14.19.3</node.version>
+  </properties>
+
+  <build>
+    <defaultGoal>clean package</defaultGoal>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>com.github.eirslett</groupId>
+          <artifactId>frontend-maven-plugin</artifactId>
+          <version>1.12.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.contextmapper</groupId>
+          <artifactId>context-mapper-maven-plugin</artifactId>
+          <version>1.0.0-SNAPSHOT</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <executions>
+
+          <execution>
+            <id>npm build</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <arguments>run build</arguments>
+            </configuration>
+          </execution>
+
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>node-and-npm</id>
+      <activation>
+        <file>
+          <missing>node</missing>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.github.eirslett</groupId>
+            <artifactId>frontend-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>install node and npm</id>
+                <goals>
+                  <goal>install-node-and-npm</goal>
+                </goals>
+                <phase>initialize</phase>
+                <configuration>
+                  <npmVersion>${npm.version}</npmVersion>
+                  <nodeVersion>${node.version}</nodeVersion>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>npm-install</id>
+      <activation>
+        <file>
+          <missing>node_modules</missing>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.github.eirslett</groupId>
+            <artifactId>frontend-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>npm install</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <phase>initialize</phase>
+                <configuration>
+                  <arguments>install --no-optional</arguments>
+                </configuration>
+              </execution>
+              <execution>
+                <id>node rebuild node-sass</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <phase>initialize</phase>
+                <configuration>
+                  <arguments>rebuild node-sass</arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>start</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <defaultGoal>package</defaultGoal>
+        <plugins>
+          <plugin>
+            <groupId>com.github.eirslett</groupId>
+            <artifactId>frontend-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>start</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <configuration>
+                  <arguments>run start</arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>make-pdf</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <defaultGoal>package</defaultGoal>
+        <plugins>
+          <plugin>
+            <groupId>com.github.eirslett</groupId>
+            <artifactId>frontend-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>make-pdf</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <configuration>
+                  <arguments>run make-pdf</arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>context-maps</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.contextmapper</groupId>
+            <artifactId>context-mapper-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>generate-context-map</id>
+                <goals>
+                  <goal>generate-context-map</goal>
+                </goals>
+                <configuration>
+                  <skip>false</skip>
+                  <inputFile>src/code/cml/banking-example.cml</inputFile>
+                  <outputDirectory>target/generated-sources/cml</outputDirectory>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+</project>

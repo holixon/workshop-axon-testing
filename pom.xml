@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>io.holixon.workshop</groupId>
+  <artifactId>workshop-axon-testing</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>Workshop: Axon Testing</name>
+  <description>An example application used for the axon testing workshop.</description>
+  <url>https://github.com/holixon/workshop-axon-testing/</url>
+
+  <modules>
+    <module>context-bankaccount</module>
+    <module>application</module>
+  </modules>
+
+  <properties>
+    <java.version>17</java.version>
+    <spring-boot.version>2.7.3</spring-boot.version>
+    <spring-cloud.version>2021.0.4</spring-cloud.version>
+
+    <axon-bom.version>4.5.17</axon-bom.version>
+
+    <jackson.version>2.12.3</jackson.version>
+
+    <!-- VERSIONS: TEST -->
+    <junit5.version>5.9.0</junit5.version>
+    <jgiven.version>1.2.2</jgiven.version>
+
+    <!-- MAVEN -->
+    <project.encoding>UTF-8</project.encoding>
+    <project.build.sourceEncoding>${project.encoding}</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>${project.encoding}</project.reporting.outputEncoding>
+
+    <jgiven.report.dir>${project.build.directory}/jgiven-reports</jgiven.report.dir>
+
+    <!-- deactivate by default -->
+    <maven.javadoc.skip>true</maven.javadoc.skip>
+    <maven.sources.skip>true</maven.sources.skip>
+    <gpg.skip>false</gpg.skip>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.axonframework</groupId>
+        <artifactId>axon-bom</artifactId>
+        <version>${axon-bom.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>io.holixon.workshop.context.bankaccount</groupId>
+        <artifactId>api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.holixon.workshop.context.bankaccount</groupId>
+        <artifactId>command</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.holixon.workshop.context.bankaccount</groupId>
+        <artifactId>query</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <defaultGoal>clean package</defaultGoal>
+    <plugins>
+      <!-- Java Compiler -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
+        <configuration>
+          <encoding>${project.build.sourceEncoding}</encoding>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+        <executions>
+          <execution>
+            <id>java-test-compile</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+            <configuration>
+              <skip>${skipTests}</skip>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- JUnit -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.22.2</version>
+        <configuration>
+          <runOrder>random</runOrder>
+          <excludes>
+            <exclude>**/*ITest.*</exclude>
+          </excludes>
+          <systemPropertyVariables>
+            <jgiven.report.dir>${project.build.directory}/jgiven-reports</jgiven.report.dir>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+      <!-- Spring Integration Tests -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>2.22.2</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <runOrder>random</runOrder>
+          <includes>
+            <include>**/*ITest.*</include>
+          </includes>
+          <systemPropertyVariables>
+            <jgiven.report.dir>${project.build.directory}/jgiven-reports</jgiven.report.dir>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+
+      <!-- Enforcer -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>enforce-maven</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireJavaVersion>
+                  <version>17</version>
+                </requireJavaVersion>
+                <requireMavenVersion>
+                  <version>3.8.0</version>
+                </requireMavenVersion>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>docs</id>
+      <modules>
+        <module>docs</module>
+      </modules>
+    </profile>
+  </profiles>
+
+  <!-- deploy and release configuration -->
+  <distributionManagement>
+    <site>
+      <id>README</id>
+      <url>https://github.com/holixon/workshop-axon-testing</url>
+    </site>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <uniqueVersion>true</uniqueVersion>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+      <uniqueVersion>false</uniqueVersion>
+    </repository>
+  </distributionManagement>
+
+  <scm>
+    <connection>scm:git:git://github.com/holixon/workshop-axon-testing.git</connection>
+    <developerConnection>scm:git:git@github.com:holixon/workshop-axon-testing.git</developerConnection>
+    <url>https://github.com/holixon/workshop-axon-testing</url>
+    <tag>HEAD</tag>
+  </scm>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/holixon/workshop-axon-testing/issues</url>
+  </issueManagement>
+
+  <developers>
+    <developer>
+      <name>Jan Galinski</name>
+      <email>jan.galinski@holisticon.de</email>
+      <organization>Holisticon AG</organization>
+      <organizationUrl>https://holisticon.de</organizationUrl>
+      <roles>
+        <role>Developer</role>
+      </roles>
+    </developer>
+    <developer>
+      <name>Simon Zambrovski</name>
+      <email>simon.zambrovski@holisticon.de</email>
+      <organization>Holisticon AG</organization>
+      <organizationUrl>https://holisticon.de</organizationUrl>
+      <roles>
+        <role>Developer</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <!-- License Stuff -->
+  <inceptionYear>2022</inceptionYear>
+  <licenses>
+    <license>
+      <name>Apache 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+    </license>
+  </licenses>
+  <organization>
+    <name>Holisticon AG</name>
+    <url>https://holisticon.de</url>
+  </organization>
+
+</project>

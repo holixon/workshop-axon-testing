@@ -1,0 +1,6 @@
+-------------------------------------------------------------------------------
+HoliBank Testing Application
+-------------------------------------------------------------------------------
+
+SpringBoot : ${spring-boot.version}
+Swagger UI : http://localhost:${server.port}/swagger-ui/index.html
