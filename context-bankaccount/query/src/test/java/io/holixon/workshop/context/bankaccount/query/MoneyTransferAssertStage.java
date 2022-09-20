@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MoneyTransferThenStage extends Stage<MoneyTransferThenStage> {
+public class MoneyTransferAssertStage extends Stage<MoneyTransferAssertStage> {
 
   @ExpectedScenarioState
   private MoneyTransferProjection projection;
@@ -21,13 +21,13 @@ public class MoneyTransferThenStage extends Stage<MoneyTransferThenStage> {
   private AtomicReference<MoneyTransfersResponse> found;
 
 
-  public MoneyTransferThenStage no_transfers_exist() {
+  public MoneyTransferAssertStage no_transfers_exist() {
     assertThat(projection.findAll().moneyTransfers()).isEmpty();
 
     return self();
   }
 
-  public MoneyTransferThenStage transfer_exists_with_state_$(MoneyTransfer expected) {
+  public MoneyTransferAssertStage transfer_exists_with_state_$(MoneyTransfer expected) {
     MoneyTransfer moneyTransfer = projection.query(new MoneyTransferByIdQuery(expected.moneyTransferId()))
                                             .orElseThrow(() -> new IllegalStateException("no transfer found for id=" + expected.moneyTransferId()));
 
@@ -36,7 +36,7 @@ public class MoneyTransferThenStage extends Stage<MoneyTransferThenStage> {
     return self();
   }
 
-  public MoneyTransferThenStage query_response_contains(MoneyTransfer... expected) {
+  public MoneyTransferAssertStage query_response_contains(MoneyTransfer... expected) {
 
     assertThat(found.get().moneyTransfers()).containsExactlyInAnyOrder(expected);
 

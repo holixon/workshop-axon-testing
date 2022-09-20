@@ -8,13 +8,13 @@ import io.holixon.workshop.context.bankaccount.api.query.CurrentBalanceResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CurrentBalanceThenStage extends Stage<CurrentBalanceThenStage> {
+public class CurrentBalanceAssertStage extends Stage<CurrentBalanceAssertStage> {
 
   @ExpectedScenarioState
   private CurrentBalanceProjection projection;
 
   @As("bankAccount[$]:  expect currentBalance=$")
-  public CurrentBalanceThenStage expect_currentBalance_for_account(String accountId, int expectedBalance) {
+  public CurrentBalanceAssertStage expect_currentBalance_for_account(String accountId, int expectedBalance) {
     var result = projection.query(new CurrentBalanceQuery(accountId));
 
     assertThat(result).hasValue(new CurrentBalanceResponse(accountId, expectedBalance));

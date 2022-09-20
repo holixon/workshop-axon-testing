@@ -5,7 +5,7 @@ import com.tngtech.jgiven.junit5.DualScenarioTest;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-class CurrentBalanceProjectionTest extends DualScenarioTest<CurrentBalanceGivenWhenStage, CurrentBalanceThenStage> {
+class CurrentBalanceProjectionTest extends DualScenarioTest<CurrentBalanceActionStage, CurrentBalanceAssertStage> {
 
   @Test
   void can_create_bankAccount() {
