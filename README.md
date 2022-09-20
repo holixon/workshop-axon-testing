@@ -56,5 +56,16 @@ Rules:
 
 ## Classes
 
-### Domain model tests
+The following branches are available for you to simplify the execution of classes:
+
+* `initial` Working application without any tests.
+* `class/0-prepare` Preparation for TDD-style fixture-based command model implementation.
+* `class/1-command-model` Solution for command model tests, preparation for query model tests.
+* `class/2-query-model` Solution for query model tests, preparation for Spring Integration tests.
+* `class/3-integration` Solution for Spring integration tests, preparation for MockMVC REST E2E tests.
+* `class/4-rest-e2e` Solution for MockMVC REST E2E tests.
+
+Use the command `git checkout <branch-name>` to switch the branches. The branch represents the solution for the class.
+Check out the previous branch and work on the class. (For example, checkout `class/0-prepare` to execute the class 1 and then
+check the `class/1-command-model` to see the solution).
 
