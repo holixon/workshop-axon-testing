@@ -60,7 +60,7 @@ public class BankAccountAggregate {
       throw new MaximumBalanceExceededException(cmd.accountId(), 0, cmd.initialBalance());
     }
 
-    // AggregateLifecycle.apply(new BankAccountCreatedEvent(cmd.accountId(), cmd.initialBalance()));
+    AggregateLifecycle.apply(new BankAccountCreatedEvent(cmd.accountId(), cmd.initialBalance()));
   }
 
   @CommandHandler
@@ -142,13 +142,13 @@ public class BankAccountAggregate {
 
   // ----------------------------------------------------------
 
-//  @EventSourcingHandler
-//  public void on(BankAccountCreatedEvent evt) {
-//    // TODO this eventHandler could be left out so people see the "Aggregate identifier must be non-null after applying an event. Make sure the aggregate identifier is initialized at the latest when handling the creation event." exception in test.
-//    logger.trace("on({})", evt);
-//    this.accountId = evt.accountId();
-//    this.balance = new BalanceModel(evt.initialBalance(), MIN_BALANCE, MAX_BALANCE);
-//  }
+  @EventSourcingHandler
+  public void on(BankAccountCreatedEvent evt) {
+    // TODO this eventHandler could be left out so people see the "Aggregate identifier must be non-null after applying an event. Make sure the aggregate identifier is initialized at the latest when handling the creation event." exception in test.
+    logger.trace("on({})", evt);
+    this.accountId = evt.accountId();
+    this.balance = new BalanceModel(evt.initialBalance(), MIN_BALANCE, MAX_BALANCE);
+  }
 
   @EventSourcingHandler
   public void on(MoneyDepositedEvent evt) {

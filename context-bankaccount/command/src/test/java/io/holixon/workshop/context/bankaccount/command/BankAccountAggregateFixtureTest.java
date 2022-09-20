@@ -32,42 +32,121 @@ class BankAccountAggregateFixtureTest {
 
     @Test
     void create_bank_account() {
-      fail("Implement me");
+      fixture
+        .givenNoPriorActivity()
+        .when(
+          new CreateBankAccountCommand("1", 100)
+        )
+        .expectEvents(
+          new BankAccountCreatedEvent("1", 100)
+        )
+        .expectState(new BankAccountAggregateState()
+                       .accountId("1")
+                       .currentBalance(100)
+        );
     }
 
     @Test
     void create_bank_account_fails_with_initial_balance_gt_max() {
-      fail("Implement me");
+      fixture
+        .givenNoPriorActivity()
+        .when(
+          new CreateBankAccountCommand("1", 1001)
+        )
+        .expectException(MaximumBalanceExceededException.class);
     }
 
     @Test
     void deposit_money_adds_to_currentBalance() {
-      fail("Implement me");
+      fixture
+        .given(
+          new BankAccountCreatedEvent("1", 100)
+        )
+        .when(
+          new DepositMoneyCommand("1", 100)
+        )
+        .expectEvents(
+          new MoneyDepositedEvent("1", 100)
+        )
+        .expectState(new BankAccountAggregateState()
+                       .accountId("1")
+                       .currentBalance(200)
+        );
     }
 
     @Test
     void depositMoney_fails_without_positive_amount() {
-      fail("Implement me");
+      fixture
+        .given(
+          new BankAccountCreatedEvent("1", 100)
+        )
+        .when(
+          new DepositMoneyCommand("1", 0)
+        )
+        .expectNoEvents()
+        .expectException(IllegalArgumentException.class)
+        .expectExceptionMessage("Amount must be > 0.");
     }
 
     @Test
     void depositMoney_fails_when_maxBalance_exceeds() {
-      fail("Implement me");
+      fixture
+        .given(
+          new BankAccountCreatedEvent("1", 100)
+        )
+        .when(
+          new DepositMoneyCommand("1", 901)
+        )
+        .expectNoEvents()
+        .expectException(MaximumBalanceExceededException.class)
+        .expectExceptionMessage("BankAccount[id=1, currentBalance=100]: Deposit of amount=901 not allowed, would exceed max. balance of 1000");
     }
 
     @Test
     void withdrawMoney_subtracts_from_currentBalance() {
-      fail("Implement me");
+      fixture
+        .given(
+          new BankAccountCreatedEvent("1", 100)
+        )
+        .when(
+          new WithdrawMoneyCommand("1", 100)
+        )
+        .expectEvents(
+          new MoneyWithdrawnEvent("1", 100)
+        )
+        .expectState(new BankAccountAggregateState()
+                       .accountId("1")
+                       .currentBalance(0)
+                       .noActiveTransfers()
+        );
     }
 
     @Test
     void withdrawMoney_fails_without_positive_amount() {
-      fail("Implement me");
+      fixture
+        .given(
+          new BankAccountCreatedEvent("1", 100)
+        )
+        .when(
+          new WithdrawMoneyCommand("1", 0)
+        )
+        .expectNoEvents()
+        .expectException(IllegalArgumentException.class)
+        .expectExceptionMessage("Amount must be > 0.");
     }
 
     @Test
     void withdrawMoney_fails_when_subBalance_subceeds() {
-      fail("Implement me");
+      fixture
+        .given(
+          new BankAccountCreatedEvent("1", 100)
+        )
+        .when(
+          new WithdrawMoneyCommand("1", 101)
+        )
+        .expectNoEvents()
+        .expectException(InsufficientBalanceException.class)
+        .expectExceptionMessage("BankAccount[id=1, currentBalance=100]: Withdrawal of amount=101 not allowed, would subceed min. balance of 0");
     }
   }
 
@@ -81,22 +160,80 @@ class BankAccountAggregateFixtureTest {
 
     @Test
     void moneyTransfer_can_be_requested_on_source() {
-      fail("Implement me");
+      fixture
+        .given(
+          new BankAccountCreatedEvent("1", 100)
+        )
+        .when(
+          new RequestMoneyTransferCommand("1", "2", 50)
+        )
+        .expectEvents(
+          new MoneyTransferRequestedEvent("mt-1-2", "1", "2", 50)
+        )
+        .expectState(new BankAccountAggregateState()
+                       .accountId("1")
+                       .currentBalance(100)
+                       .activeTransfer("mt-1-2", 50)
+        );
     }
 
     @Test
     void moneyTransfer_can_be_completed_on_source() {
-      fail("Implement me");
+      fixture
+        .given(
+          new BankAccountCreatedEvent("1", 100),
+          new MoneyTransferRequestedEvent("mt-1-2", "1", "2", 60)
+        )
+        .when(
+          new CompleteMoneyTransferCommand("1", "mt-1-2")
+        )
+        .expectEvents(
+          new MoneyTransferCompletedEvent("mt-1-2", "1", 60)
+        )
+        .expectState(new BankAccountAggregateState()
+                       .accountId("1")
+                       .currentBalance(40)
+                       .noActiveTransfers()
+        );
     }
 
     @Test
     void moneyTransfer_can_be_received_on_target() {
-      fail("Implement me");
+      fixture
+        .given(
+          new BankAccountCreatedEvent("2", 100)
+        )
+        .when(
+          new ReceiveMoneyTransferCommand("2", "mt-1-2", 50)
+        )
+        .expectEvents(
+          new MoneyTransferReceivedEvent("mt-1-2", "2", 50)
+        )
+        .expectState(new BankAccountAggregateState()
+                       .accountId("2")
+                       .currentBalance(150)
+                       .noActiveTransfers()
+        );
     }
 
     @Test
     void moneyTransfer_can_be_cancelled_on_source() {
-      fail("Implement me");
+      fixture
+        .given(
+          new BankAccountCreatedEvent("1", 100),
+          new MoneyTransferRequestedEvent("mt-1-2", "1", "2", 50)
+        )
+        .when(
+          new CancelMoneyTransferCommand("1", "mt-1-2", "exception on target")
+        )
+        .expectEvents(
+          new MoneyTransferCancelledEvent("mt-1-2", "exception on target")
+        )
+        .expectState(new BankAccountAggregateState()
+                       .accountId("1")
+                       .currentBalance(100)
+                       .noActiveTransfers()
+        );
     }
   }
 }
