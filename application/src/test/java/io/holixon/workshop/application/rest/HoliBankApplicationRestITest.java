@@ -15,7 +15,6 @@ import java.util.UUID;
 })
 @AutoConfigureMockMvc
 @EnableJGiven
-@Disabled
 public class HoliBankApplicationRestITest extends AbstractTestContainerIntegrationTestBase<HoliBankApplicationActionStage, HoliBankApplicationAssertStage> {
 
   private String sourceAccountId;
@@ -30,21 +29,54 @@ public class HoliBankApplicationRestITest extends AbstractTestContainerIntegrati
   @Test
   void bank_account_can_be_created() throws Exception {
 
+    given()
+      .noPriorActivity();
+
+    when()
+      .account_is_created(sourceAccountId, 100);
+
+    then()
+      .account_with_id_has_balance(sourceAccountId, 100);
   }
 
   @Test
   void money_can_be_withdrawn() throws Exception {
+    given()
+      .account_is_created(sourceAccountId, 100);
 
+    when()
+      .money_is_withdrawn(sourceAccountId, 20);
+
+    then()
+      .account_with_id_has_balance(sourceAccountId, 80);
   }
 
   @Test
   void money_can_be_deposited() throws Exception {
+    given()
+      .account_is_created(sourceAccountId, 100);
 
+    when()
+      .money_is_deposited(sourceAccountId, 20);
+
+    then()
+      .account_with_id_has_balance(sourceAccountId, 120);
   }
 
   @Test
   void money_can_be_transferred() throws Exception {
+    given()
+      .account_is_created(sourceAccountId, 100)
+      .and()
+      .account_is_created(targetAccountId, 100);
 
+    when()
+      .money_is_transferred(sourceAccountId, targetAccountId, 20);
+
+    then()
+      .account_with_id_has_balance(sourceAccountId, 80)
+      .and()
+      .account_with_id_has_balance(targetAccountId, 120);
   }
 
 }
