@@ -10,7 +10,7 @@ import io.holixon.workshop.context.bankaccount.api.query.MoneyTransfersResponse;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public class MoneyTransferGivenWhenStage extends Stage<MoneyTransferGivenWhenStage> {
+public class MoneyTransferActionStage extends Stage<MoneyTransferActionStage> {
 
   @ProvidedScenarioState
   private final MoneyTransferProjection projection = new MoneyTransferProjection();
@@ -18,26 +18,26 @@ public class MoneyTransferGivenWhenStage extends Stage<MoneyTransferGivenWhenSta
   @ProvidedScenarioState
   private final AtomicReference<MoneyTransfersResponse> found = new AtomicReference<>();
 
-  public MoneyTransferGivenWhenStage no_prior_activity() {
+  public MoneyTransferActionStage no_prior_activity() {
     return self();
   }
 
-  public MoneyTransferGivenWhenStage transfer_requested(MoneyTransferRequestedEvent evt) {
+  public MoneyTransferActionStage transfer_requested(MoneyTransferRequestedEvent evt) {
     projection.on(evt);
     return self();
   }
 
-  public MoneyTransferGivenWhenStage transfer_completed(MoneyTransferCompletedEvent evt) {
+  public MoneyTransferActionStage transfer_completed(MoneyTransferCompletedEvent evt) {
     projection.on(evt);
     return self();
   }
 
-  public MoneyTransferGivenWhenStage transfer_cancelled(MoneyTransferCancelledEvent evt) {
+  public MoneyTransferActionStage transfer_cancelled(MoneyTransferCancelledEvent evt) {
     projection.on(evt);
     return self();
   }
 
-  public MoneyTransferGivenWhenStage query_transfers_for_account(MoneyTransfersQuery query) {
+  public MoneyTransferActionStage query_transfers_for_account(MoneyTransfersQuery query) {
     found.set(projection.query(query));
     return self();
   }
