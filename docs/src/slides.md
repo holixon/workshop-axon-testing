@@ -10,13 +10,14 @@
 
 # The testing pyramid
 
-<img src="/images/the-great-pyramid-of-giza-pie-chart.jpeg" />
+![img](images/the-great-pyramid-of-giza-pie-chart.jpg) <!-- .element: style="height: 500px; padding-bottom:10px;" -->
 
 ---
 
 # Structure
 
-<img src="/images/tp-0-overview.png"/>
+![img](images/tp-0-overview.png) <!-- .element: style="height: 500px; padding-bottom:10px;" -->
+
 
 ---
 
