@@ -1,0 +1,29 @@
+ContextMap DDDHoliBankMap {
+    contains BankAccountContext
+}
+
+BoundedContext BankAccountContext implements BankAccountDomain {
+    type = FEATURE
+    domainVisionStatement = "The bank account context is responsible for management of bank accounts, operations on ATM and money transfers."
+    responsibilities = "Bank Accounts, Money Transfers, ATM"
+
+    Aggregate BankAccounts {
+
+        Entity BankAccount {
+            aggregateRoot
+        }
+
+    }
+}
+
+Domain BankAccountDomain {
+    Subdomain MoneyTransfer {
+        type = CORE_DOMAIN
+    }
+    Subdomain ATM {
+        type = CORE_DOMAIN
+    }
+    Subdomain AccountManagement {
+        type = CORE_DOMAIN
+    }
+}
