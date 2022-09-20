@@ -8,6 +8,18 @@
 
 ---
 
+# The testing pyramid
+
+<img src="/images/the-great-pyramid-of-giza-pie-chart.jpeg" />
+
+---
+
+# Structure
+
+<img src="/images/tp-0-overview.png"/>
+
+---
+
 # Structure
 
 * Testing concepts

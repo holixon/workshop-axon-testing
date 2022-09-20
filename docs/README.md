@@ -21,3 +21,6 @@ This will run the build and watch on files and automatically open the browser to
 Will create a PDF handout in `dist` (currently not having a nice layout).
 
 
+## References
+
+* [pyramid diagram](src/images/the-great-pyramid-of-giza-pie-chart.jpeg) - https://percentagecalculator.mes.fm/img/memes/the-great-pyramid-of-giza-pie-chart.jpg
