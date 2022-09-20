@@ -41,6 +41,11 @@
       <artifactId>springdoc-openapi-ui</artifactId>
       <version>1.6.11</version>
     </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+    </dependency>
+
 
     <!-- TESTING -->
     <dependency>
