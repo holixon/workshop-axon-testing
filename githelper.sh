@@ -5,6 +5,7 @@
 #
 declare -a BRANCHES=(
     "initial"
+    "class/0-prepare"
     "class/1-command-model"
     "class/2-query-model"
     "class/3-integration"
