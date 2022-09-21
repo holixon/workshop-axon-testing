@@ -34,7 +34,7 @@ public class HoliBankApplicationRestITest extends AbstractTestContainerIntegrati
       .account_is_created(sourceAccountId, 100);
 
     then()
-      .account_with_id_has_balance(sourceAccountId, 100);
+      .account_with_id_$_has_balance_$(sourceAccountId, 100);
   }
 
   @Test
@@ -72,9 +72,9 @@ public class HoliBankApplicationRestITest extends AbstractTestContainerIntegrati
       .money_is_transferred(sourceAccountId, targetAccountId, 20);
 
     then()
-      .account_with_id_has_balance(sourceAccountId, 80)
+      .account_with_id_$_has_balance_$(sourceAccountId, 80)
       .and()
-      .account_with_id_has_balance(targetAccountId, 120);
+      .account_with_id_$_has_balance_$(targetAccountId, 120);
   }
 
 }
