@@ -1,7 +1,7 @@
 
 @startuml
 actor "Customer" as cus
-actor "Eployee" as emp
+actor "Employee" as emp
 
 rectangle HoliBank {
   usecase "Create Account" as UC0
