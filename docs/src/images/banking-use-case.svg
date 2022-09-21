@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="260px" preserveAspectRatio="none" style="width:821px;height:260px;background:#FFFFFF;" version="1.1" viewBox="0 0 821 260" width="821px" zoomAndPan="magnify"><defs/><g><!--MD5=[16ce7a23f2cda3d9949b0657b4f09ee3]
+cluster HoliBank--><g id="cluster_HoliBank"><rect fill="none" height="157" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;" width="808" x="7" y="97.5"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="71" x="375.5" y="112.4951">HoliBank</text></g><!--MD5=[27c853d61c5f56ccde3ed4dd83a344c2]
+cluster ATM--><g id="cluster_ATM"><rect fill="none" height="90" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;" width="401" x="223" y="140.5"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="36" x="405.5" y="155.4951">ATM</text></g><!--MD5=[008106e555a36c369ff1dc78d5e7b4ed]
+cluster Money Transfer--><g id="cluster_Money Transfer"><rect fill="none" height="83" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:1.0;" width="168" x="31" y="144"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="127" x="51.5" y="158.9951">Money Transfer</text></g><g id="elem_UC0"><ellipse cx="720.8536" cy="194.8707" fill="#F1F1F1" rx="77.3536" ry="17.8707" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="112" x="662.1333" y="198.5454">Create Account</text></g><g id="elem_UC1"><ellipse cx="525.8658" cy="194.7732" fill="#F1F1F1" rx="81.8658" ry="18.7732" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="123" x="463.3805" y="197.9463">Money Withdrawl</text></g><g id="elem_UC2"><ellipse cx="323.8592" cy="194.8718" fill="#F1F1F1" rx="84.8592" ry="19.3718" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="130" x="258.8592" y="197.7185">Money Deposition</text></g><g id="elem_UC3"><ellipse cx="114.8807" cy="194.9761" fill="#F1F1F1" rx="67.8807" ry="15.9761" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="87" x="68.3807" y="198.7237">Send Money</text></g><!--MD5=[773eb571fde6ee03a00dd7634db690eb]
+entity cus--><g id="elem_cus"><ellipse cx="324" cy="14" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M324,22 L324,49 M311,30 L337,30 M324,49 L311,64 M324,49 L337,64 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="70" x="289" y="78.4951">Customer</text></g><!--MD5=[0f344d8d8da5533e59ff00e864a0a13d]
+entity emp--><g id="elem_emp"><ellipse cx="721" cy="14" fill="#F1F1F1" rx="8" ry="8" style="stroke:#181818;stroke-width:0.5;"/><path d="M721,22 L721,49 M708,30 L734,30 M721,49 L708,64 M721,49 L734,64 " fill="none" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="58" x="692" y="78.4951">Eployee</text></g><!--MD5=[bdd6d0ace4cd113af279bd2560c8d203]
+link cus to UC1--><g id="link_cus_UC1"><path d="M359.205,55.879 C380.002,63.546 406.238,74.922 427,89.5 C460.31,112.888 491.306,148.813 509.45,171.8563 " fill="none" id="cus-to-UC1" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="512.686,176.0032,510.302,166.4472,509.6097,172.0616,503.9954,171.3693,512.686,176.0032" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[62c140e3dbffc411394cfc199834f0c0]
+link cus to UC2--><g id="link_cus_UC2"><path d="M324,81.84 C324,109.499 324,146.366 324,170.146 " fill="none" id="cus-to-UC2" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="324,175.3068,328,166.3068,324,170.3068,320,166.3068,324,175.3068" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[6ab1829143e5f450abdec4ada8bcf33f]
+link cus to UC3--><g id="link_cus_UC3"><path d="M288.772,56.685 C268.612,64.497 243.362,75.747 223,89.5 C186.159,114.383 150.514,152.438 130.795,175.1064 " fill="none" id="cus-to-UC3" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="127.301,179.1534,136.2102,174.955,130.5685,175.3687,130.1547,169.727,127.301,179.1534" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[bc3801b17748406ef9de62e81d9ac2c1]
+link emp to UC0--><g id="link_emp_UC0"><path d="M721,81.84 C721,110.142 721,148.085 721,171.7831 " fill="none" id="emp-to-UC0" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="721,176.9051,725,167.9051,721,171.9051,717,167.9051,721,176.9051" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[9ab4d98ec51fd8813a622df679cc81c9]
+@startuml
+actor "Customer" as cus
+actor "Eployee" as emp
+
+rectangle HoliBank {
+  usecase "Create Account" as UC0
+
+  rectangle ATM {
+    usecase "Money Withdrawl" as UC1
+    usecase "Money Deposition" as UC2
+  }
+
+
+  rectangle "Money Transfer" {
+    usecase "Send Money" as UC3
+  }
+
+}
+cus - -> UC1
+cus - -> UC2
+cus - -> UC3
+emp - -> UC0
+@enduml
+
+PlantUML version 1.2022.8beta9(Unknown compile time)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
