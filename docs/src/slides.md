@@ -140,7 +140,10 @@ The HoliBank is a very simple banking service.
 
 --
 
-// TODO: report
+# JGiven Report
+
+![jgiven report](images/jgiven-report.png)<!-- .element: style="height: 500px; padding-bottom:10px;" -->
+
 
 --
 
