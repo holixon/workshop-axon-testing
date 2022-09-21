@@ -20,6 +20,11 @@ The Holi-Bank is a very simple banking service.
 
 ![components](images/banking-components.svg)<!-- .element: style="height: 500px; padding-bottom:10px;" -->
 
+--
+
+# Demo
+
+![swagger](images/bank-swagger-demo.png)<!-- .element: style="height: 500px; padding-bottom:10px;" -->
 
 ---
 
@@ -74,6 +79,7 @@ The Holi-Bank is a very simple banking service.
 * Testing of the aggregate in isolation
 * Given/When/Then style
 * Command dispatching tests
+
 ```java
 import org.axonframework.test.aggregate.AggregateTestFixture;
 ```
