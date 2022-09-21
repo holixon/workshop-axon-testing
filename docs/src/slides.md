@@ -241,7 +241,7 @@ The HoliBank is a very simple banking service.
 
 --
 
-# Class 3: Test domain integration of model
+## Class 3: Test domain integration of model
 
 * Check out: `git checkout class/3-integration`
 * Open `BankAccountUseCasesSpringITest`
