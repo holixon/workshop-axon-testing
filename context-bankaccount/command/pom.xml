@@ -37,6 +37,19 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>com.tngtech.jgiven</groupId>
+      <artifactId>jgiven-junit5</artifactId>
+      <version>${jgiven.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.holixon.axon.testing</groupId>
+      <artifactId>axon-testing-jgiven-junit5</artifactId>
+      <version>${axon-jgiven.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
       <scope>test</scope>
