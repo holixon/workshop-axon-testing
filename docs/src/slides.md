@@ -8,6 +8,21 @@
 
 ---
 
+# Holi Bank Example
+
+The Holi-Bank is a very simple banking service.
+
+![use case](images/banking-use-case.svg)<!-- .element: style="height: 500px; padding-bottom:10px;" -->
+
+--
+
+# Component Diagram
+
+![components](images/banking-components.svg)<!-- .element: style="height: 500px; padding-bottom:10px;" -->
+
+
+---
+
 # The testing pyramid
 
 ![img](images/the-great-pyramid-of-giza-pie-chart.jpg) <!-- .element: style="height: 500px; padding-bottom:10px;" -->
