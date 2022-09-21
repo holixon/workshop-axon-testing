@@ -38,7 +38,6 @@ The Holi-Bank is a very simple banking service.
 
 ![img](images/tp-0-overview.png) <!-- .element: style="height: 500px; padding-bottom:10px;" -->
 
-
 ---
 
 # Structure
@@ -59,18 +58,46 @@ The Holi-Bank is a very simple banking service.
 * Integration -> Components (white box, mocks)
 * Unit        -> Individual functions (white box, mocks)
 
+--- 
+
+# Domain Logic Test
+
+* Calculations are correct
+* Type constraints are met
+
+* Tools: junit
+
 ---
 
-# Unit Testing
+# Command Test
+
+* Correct **behavior** of aggregates and sagas
 
 --
 
-## Theory
+## class 1 - Test BankAccountAggregate
+
+* Check out: `git checkout class/0-prepare`
+* Open `BankAccountAggregateTest`
+* Implement test to create a new `BankAccount` using `AggregateTestFixture`
+
+### Theory
 
 * Use JUnit as runner
 * Test one class
 * Use Fixtures provided by Axon Framework
 * Limitations: multiple classes in combination
+
+--
+
+##  
+
+---
+
+# Query Model Test
+
+--
+
 
 --
 
