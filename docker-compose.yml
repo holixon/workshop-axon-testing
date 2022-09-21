@@ -4,7 +4,7 @@ services:
   axon-server:
     container_name: "workshop-axon-server"
     #image: axoniq/axonserver-enterprise:4.5.15-dev
-    image: axoniq/axonserver:4.5.12-jdk-17-dev
+    image: axoniq/axonserver:4.6.3-jdk-17-dev
     hostname: axonserver
     environment:
       AXONIQ_AXONSERVER_DEVMODE_ENABLED: "true"

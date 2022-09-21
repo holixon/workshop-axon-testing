@@ -1,0 +1,40 @@
+@startuml
+
+package "REST Adapter" as RA {
+  [Command Controller] as RCC
+  [Query Controller] as RQC
+}
+
+package "Domain API" as API {
+  package "Command"
+  package "Event"
+  package "Query"
+}
+
+package "Holi Bank Domain" {
+  [Money Transfer Saga] as CMS
+
+  package "Command Model" as CM {
+    [Bank Account Aggregate] as CMA
+
+  }
+  package "Query Model" as QM {
+    [Current Balance Projection] as QMC
+    [Money Transfers Projection] as QMM
+  }
+}
+
+RCC -d-> Command
+RQC -d-> Query
+QMC -u-> Query
+QMM -u-> Query
+
+CMA -u-> Event
+CMA -u-> Command
+QMC -u-> Event
+QMM -u-> Event
+CMS -u-> Event
+CMS -u-> Command
+
+
+@enduml

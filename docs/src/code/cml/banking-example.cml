@@ -13,6 +13,7 @@ BoundedContext BankAccountContext implements BankAccountDomain {
             aggregateRoot
         }
 
+
     }
 }
 

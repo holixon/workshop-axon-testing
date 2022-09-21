@@ -8,6 +8,26 @@
 
 ---
 
+# Holi Bank Example
+
+The Holi-Bank is a very simple banking service.
+
+![use case](images/banking-use-case.svg)<!-- .element: style="height: 500px; padding-bottom:10px;" -->
+
+--
+
+# Component Diagram
+
+![components](images/banking-components.svg)<!-- .element: style="height: 500px; padding-bottom:10px;" -->
+
+--
+
+# Demo
+
+![swagger](images/bank-swagger-demo.png)<!-- .element: style="height: 500px; padding-bottom:10px;" -->
+
+---
+
 # The testing pyramid
 
 ![img](images/the-great-pyramid-of-giza-pie-chart.jpg) <!-- .element: style="height: 500px; padding-bottom:10px;" -->
@@ -17,7 +37,6 @@
 # Structure
 
 ![img](images/tp-0-overview.png) <!-- .element: style="height: 500px; padding-bottom:10px;" -->
-
 
 ---
 
@@ -39,13 +58,30 @@
 * Integration -> Components (white box, mocks)
 * Unit        -> Individual functions (white box, mocks)
 
+--- 
+
+# Domain Logic Test
+
+* Calculations are correct
+* Type constraints are met
+
+* Tools: junit
+
 ---
 
-# Unit Testing
+# Command Test
+
+* Correct **behavior** of aggregates and sagas
 
 --
 
-## Theory
+## class 1 - Test BankAccountAggregate
+
+* Check out: `git checkout class/0-prepare`
+* Open `BankAccountAggregateTest`
+* Implement test to create a new `BankAccount` using `AggregateTestFixture`
+
+### Theory
 
 * Use JUnit as runner
 * Test one class
@@ -54,11 +90,23 @@
 
 --
 
+##  
+
+---
+
+# Query Model Test
+
+--
+
+
+--
+
 ## Aggregate Testing
 
 * Testing of the aggregate in isolation
 * Given/When/Then style
 * Command dispatching tests
+
 ```java
 import org.axonframework.test.aggregate.AggregateTestFixture;
 ```
