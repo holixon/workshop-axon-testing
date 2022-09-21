@@ -2,13 +2,11 @@ package io.holixon.workshop.application.rest;
 
 import com.tngtech.jgiven.integration.spring.EnableJGiven;
 import io.holixon.workshop.application.HoliBankApplication;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.UUID;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {
   HoliBankApplication.class
@@ -48,7 +46,7 @@ public class HoliBankApplicationRestITest extends AbstractTestContainerIntegrati
       .money_is_withdrawn(sourceAccountId, 20);
 
     then()
-      .account_with_id_has_balance(sourceAccountId, 80);
+      .account_with_id_$_has_balance_$(sourceAccountId, 80);
   }
 
   @Test
@@ -60,7 +58,7 @@ public class HoliBankApplicationRestITest extends AbstractTestContainerIntegrati
       .money_is_deposited(sourceAccountId, 20);
 
     then()
-      .account_with_id_has_balance(sourceAccountId, 120);
+      .account_with_id_$_has_balance_$(sourceAccountId, 120);
   }
 
   @Test

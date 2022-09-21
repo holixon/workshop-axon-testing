@@ -16,7 +16,7 @@ public class HoliBankApplicationAssertStage extends Stage<HoliBankApplicationAss
   @Autowired
   private MockMvc rest;
 
-  public HoliBankApplicationAssertStage account_with_id_has_balance(String accountId, int balance) throws Exception {
+  public HoliBankApplicationAssertStage account_with_id_$_has_balance_$(String accountId, int balance) throws Exception {
     await().untilAsserted(
       () -> rest
         .perform(
