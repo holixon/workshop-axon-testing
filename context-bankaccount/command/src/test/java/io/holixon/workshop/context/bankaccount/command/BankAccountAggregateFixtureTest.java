@@ -23,6 +23,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+/**
+ * Aggregate testing has following aspects:
+ *
+ * * command can be handled correctly (constraints)
+ * * commandHandler emits expected Event
+ * * (eventSourcingHandler modifies internal state of aggregate)
+ */
 class BankAccountAggregateFixtureTest {
 
   private final AggregateTestFixture<BankAccountAggregate> fixture = new AggregateTestFixture<>(BankAccountAggregate.class);
@@ -155,6 +162,7 @@ class BankAccountAggregateFixtureTest {
 
     @BeforeEach
     void setUp() {
+      // this allows to use a fixed value instead of a random uuid
       fixture.registerInjectableResource(new MoneyTransferIdGeneratorFake("mt-1-2"));
     }
 
