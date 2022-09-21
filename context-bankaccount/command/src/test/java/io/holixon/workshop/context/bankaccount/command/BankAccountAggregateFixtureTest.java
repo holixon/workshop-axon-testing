@@ -23,6 +23,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+/**
+ * Aggregate testing has following aspects:
+ *
+ * * command can be handled correctly (constraints)
+ * * commandHandler emits expected Event
+ * * (eventSourcingHandler modifies internal state of aggregate)
+ */
 class BankAccountAggregateFixtureTest {
 
   private final AggregateTestFixture<BankAccountAggregate> fixture = new AggregateTestFixture<>(BankAccountAggregate.class);
@@ -33,42 +40,35 @@ class BankAccountAggregateFixtureTest {
     @Test
     void create_bank_account() {
       fail("Implement me");
-    }
 
-    @Test
-    void create_bank_account_fails_with_initial_balance_gt_max() {
-      fail("Implement me");
+      // GIVEN: nothing happened before
+      // WHEN: we create a bank account with id and initial balance
+      // THEN: event: BankAccountCreated(id, initial)
+      // AND: account.id==id, account.balance==initial
+
     }
 
     @Test
     void deposit_money_adds_to_currentBalance() {
       fail("Implement me");
-    }
 
-    @Test
-    void depositMoney_fails_without_positive_amount() {
-      fail("Implement me");
-    }
-
-    @Test
-    void depositMoney_fails_when_maxBalance_exceeds() {
-      fail("Implement me");
-    }
-
-    @Test
-    void withdrawMoney_subtracts_from_currentBalance() {
-      fail("Implement me");
-    }
-
-    @Test
-    void withdrawMoney_fails_without_positive_amount() {
-      fail("Implement me");
+      // GIVEN: account with id and initial balance
+      // WHEN: we deposit money "amount" to account
+      // THEN: event: MoneyDeposited(id, amount")
+      // AND: account.balance==initial+amount
     }
 
     @Test
     void withdrawMoney_fails_when_subBalance_subceeds() {
       fail("Implement me");
+
+      // GIVEN: account with id and initial balance
+      // WHEN: we try to withdraw more than the initial balance
+      // THEN: no events
+      // AND: error that balance is insufficient
+
     }
+
   }
 
   @Nested
@@ -76,27 +76,30 @@ class BankAccountAggregateFixtureTest {
 
     @BeforeEach
     void setUp() {
+      // this allows to use a fixed value instead of a random uuid
       fixture.registerInjectableResource(new MoneyTransferIdGeneratorFake("mt-1-2"));
     }
 
     @Test
     void moneyTransfer_can_be_requested_on_source() {
       fail("Implement me");
+
+      // GIVEN: account with id and initial balance
+      // WHEN we start a money transfer to another account
+      // THEN event MoneyTransferRequestedEvent(transferId, id, otherId, amount)
+      // AND account.activeTransfers contains the new money transfer
     }
 
     @Test
     void moneyTransfer_can_be_completed_on_source() {
       fail("Implement me");
+
+      // GIVEN: account with id and initial balance
+      // AND we start a money transfer to another account
+      // WHEN the transfer is completed successfully
+      // THEN event MoneyTransferCompletedEvent(transferId, id, amount)
+      // AND account has no active transfers
     }
 
-    @Test
-    void moneyTransfer_can_be_received_on_target() {
-      fail("Implement me");
-    }
-
-    @Test
-    void moneyTransfer_can_be_cancelled_on_source() {
-      fail("Implement me");
-    }
   }
 }
