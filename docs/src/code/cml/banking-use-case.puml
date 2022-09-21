@@ -1,0 +1,24 @@
+
+@startuml
+actor "Customer" as cus
+actor "Eployee" as emp
+
+rectangle HoliBank {
+  usecase "Create Account" as UC0
+
+  rectangle ATM {
+    usecase "Money Withdrawl" as UC1
+    usecase "Money Deposition" as UC2
+  }
+
+
+  rectangle "Money Transfer" {
+    usecase "Send Money" as UC3
+  }
+
+}
+cus --> UC1
+cus --> UC2
+cus --> UC3
+emp --> UC0
+@enduml
