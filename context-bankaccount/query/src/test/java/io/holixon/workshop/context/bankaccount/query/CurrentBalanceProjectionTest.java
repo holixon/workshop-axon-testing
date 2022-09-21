@@ -26,7 +26,10 @@ class CurrentBalanceProjectionTest extends DualScenarioTest<CurrentBalanceAction
 
     then()
       .expect_currentBalance_for_account("1", 40);
-    // TODO: leave this, later use as example to show benefits of using jgiven.
+
+    // this is how this would look like
+    // without jgiven ...
+    //
     //    projection.on(new BankAccountCreatedEvent("1", 100));
     //    projection.on(new MoneyWithdrawnEvent("1", 40));
     //
