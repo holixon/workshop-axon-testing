@@ -15,27 +15,23 @@ public class BankAccountUseCasesSpringITest extends DualSpringScenarioTest<BankA
 
   @Test
   void create_account_and_query_balance() {
-
+    // GIVEN: create account with id and balance
+    // THEN: query the balance of this account
   }
 
   @Test
   void withdraw_amount() {
-
+    // GIVEN account with id and balance
+    // WHEN we withdraw an amount
+    // THEN the balance is decreased by amount
   }
 
-  @Test
-  void deposit_amount() {
-
-  }
 
   @Test
   void transfer_10_from_source_to_target() {
-
-  }
-
-  @Test
-  void transfer_fails_when_target_would_exceed_maxBalance() {
-
+    // GIVEN two accounts
+    // WHEN we transfer amount from 1st to 2nd
+    // THEN 1st balance is decreased
   }
 
   private String accountId() {
