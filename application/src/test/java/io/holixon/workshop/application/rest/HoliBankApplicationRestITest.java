@@ -29,22 +29,24 @@ public class HoliBankApplicationRestITest extends AbstractTestContainerIntegrati
 
   @Test
   void bank_account_can_be_created() throws Exception {
-
+    // GIVEN nothing happened
+    // WHEN account with id and balance is created
+    // THEN balance for account can be queried
   }
 
   @Test
   void money_can_be_withdrawn() throws Exception {
-
-  }
-
-  @Test
-  void money_can_be_deposited() throws Exception {
-
+    // GIVEN an account with balance
+    // WHEN we withdraw an amount
+    // THEN the balance is decreased by amount
   }
 
   @Test
   void money_can_be_transferred() throws Exception {
-
+    // GIVEN two accounts
+    // WHEN we transfer amount from 1st to 2nd
+    // THEN 1st balance is decreased by amount
+    // AND 2nd balance is increased by amount
   }
 
 }
