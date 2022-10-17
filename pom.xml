@@ -28,7 +28,7 @@
 
     <!-- VERSIONS: TEST -->
     <junit5.version>5.9.0</junit5.version>
-    <jgiven.version>1.2.2</jgiven.version>
+    <jgiven.version>1.2.3</jgiven.version>
     <axon-jgiven.version>0.2.1</axon-jgiven.version>
 
     <!-- MAVEN -->
